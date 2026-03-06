@@ -1,0 +1,139 @@
+.\" pktamp.8 - manual page for pktamp
+.\"
+.TH PKTAMP 8 "January 2026" "Version 1.0" "System Administration"
+
+.SH NAME
+pktamp \- Packet Capture Replay Web Interface
+
+.SH SYNOPSIS
+.B pktamp
+is a web-based interface for replaying packet capture files using tcpreplay.
+
+.SH DESCRIPTION
+Pktamp provides a Winamp-styled web interface that allows users to:
+.IP \(bu 4
+Upload packet capture files
+.IP \(bu 4
+Manage stored packet captures (rename, delete)
+.IP \(bu 4
+Select network interfaces for replay (including loopback)
+.IP \(bu 4
+Adjust replay speed from 0 (unlimited) to 10 Gbps
+.IP \(bu 4
+Start and stop packet replay
+.IP \(bu 4
+Replay multiple packet captures simultaneously
+
+.SH INSTALLATION
+See INSTALL.md for detailed installation instructions.
+
+Briefly:
+.IP 1. 4
+Download and run the installer: ./install.sh
+.IP 2. 4
+Access the web interface at http://<bind_ip>:8080
+.IP 3. 4
+Click "Upload" to add packet capture files
+.IP 4. 4
+Select files, interface, and speed, then click "START"
+
+.SH WEB INTERFACE
+The web interface is accessible at http://<bind_ip>:8080
+
+.SH COMMAND LINE USAGE
+.PP
+The service runs automatically after installation:
+.BR systemctl start pktamp
+.PP
+To restart the service:
+.BR systemctl restart pktamp
+.PP
+To view logs:
+.BR journalctl -u pktamp -f
+
+.SH API ENDPOINTS
+.TP
+.B GET /api/ping
+Health check endpoint.
+.TP
+.B GET /api/interfaces
+List available network interfaces.
+.TP
+.B GET /api/pcaps
+List stored packet captures.
+.TP
+.B POST /api/pcaps
+Upload a packet capture file.
+.TP
+.B PUT /api/pcaps/<name>
+Rename a packet capture.
+.TP
+.B DELETE /api/pcaps/<name>
+Delete a packet capture.
+.TP
+.B POST /api/replay
+Start replaying selected packet captures.
+.TP
+.B DELETE /api/replay/<id>
+Stop a replay.
+.TP
+.B GET /api/replay/<id>/status
+Get status of a replay.
+
+.SH FILES
+.TP
+.B /opt/pktamp
+Application directory
+.TP
+.B /var/lib/pktamp/pcaps
+Directory for storing packet capture files
+.TP
+.B /etc/systemd/system/pktamp.service
+Systemd unit file
+
+.SH USER
+The service runs as user
+.B pktamp
+with no login shell.
+
+.SH REQUIREMENTS
+.TP
+.B Linux
+Debian/Ubuntu or RHEL/CentOS/AlmaLinux
+.TP
+.B Python 3.11+
+.TP
+.B tcpreplay
+.TP
+.B Root/sudo access
+for installation
+
+.SH SECURITY NOTES
+.TP
+.B capabilities
+tcpreplay is granted CAP_NET_RAW and CAP_NET_ADMIN to run without root privileges.
+.TP
+.B Firewall
+Port 8080 must be open for web interface access.
+
+.SH TROUBLESHOOTING
+.TP
+.B Service won't start
+Check logs: journalctl -u pktamp -n 50
+.TP
+.B Cannot access web UI
+Verify firewall allows port 8080 and service is running.
+.TP
+.B Permission denied on tcpreplay
+Run: sudo setcap cap_net_raw,cap_net_admin+eip $(which tcpreplay)
+
+.SH LICENSE
+CC0 1.0 Universal (Public Domain Dedication)
+
+.SH AUTHOR
+Originalauthor: Scott Hall (foodiddy)
+.PP
+This documentation: Generated for pktamp v1.0
+
+.SH SEE ALSO
+.BR tcpreplay (8)

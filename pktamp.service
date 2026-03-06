@@ -1,0 +1,18 @@
+[Unit]
+Description=Pktamp - Web UI for tcpreplay
+After=network.target
+
+[Service]
+User=pktamp
+Group=pktamp
+WorkingDirectory=/opt/pktamp
+Environment=FLASK_APP=app
+Environment=LISTEN_IP={BIND_IP}
+ExecStart=/opt/pktamp/venv/bin/gunicorn -b ${LISTEN_IP}:8080 app:app
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=pktamp
+
+[Install]
+WantedBy=multi-user.target

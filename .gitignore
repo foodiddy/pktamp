@@ -1,0 +1,21 @@
+# pktamp - Web interface for packet capture replays
+
+## Project Files
+
+# Python application
+/app
+!app/_*.py
+!app/*/
+/static
+!static/*/
+/templates
+!templates/*/
+
+# Documentation
+README.md
+INSTALL.md
+pktamp.8
+
+# Tests
+tests
+

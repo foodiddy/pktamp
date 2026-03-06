@@ -1,0 +1,262 @@
+/* Winamp-style CSS for Pktamp */
+
+:root {
+    --bg-main: #2b2b2b;
+    --bg-light: #4b4b4b;
+    --bg-highlight: #6b6b6b;
+    --text-main: #e0e0e0;
+    --text-dim: #a0a0a0;
+    --border: #1a1a1a;
+    --accent: #00aa00;
+    --accent-hover: #00cc00;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: Arial, sans-serif;
+    color: var(--text-main);
+}
+
+#app {
+    width: 100%;
+    height: 100vh;
+}
+
+/* Main window */
+.main-window {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-main);
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header bar */
+.header-bar {
+    height: 24px;
+    background: linear-gradient(to right, var(--bg-highlight), var(--bg-light));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    border-bottom: 1px solid var(--border);
+}
+
+.title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.title-bar-controls button {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border);
+    background: #333;
+    color: #fff;
+    font-size: 8px;
+    margin-left: 2px;
+    cursor: pointer;
+}
+
+/* Content area */
+.content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Left panel (playlist) */
+.left-panel {
+    width: 35%;
+    min-width: 250px;
+    background: var(--bg-light);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.playlist-header {
+    height: 24px;
+    background: var(--bg-highlight);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.playlist-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text-main);
+}
+
+.playlist-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.playlist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.playlist li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.playlist li:hover {
+    background: var(--bg-highlight);
+}
+
+.playlist li.selected {
+    background: var(--accent);
+    color: #fff;
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 8px;
+}
+
+.file-size {
+    font-size: 10px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+}
+
+/* File actions */
+.file-actions {
+    padding: 4px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 4px;
+}
+
+.file-actions button {
+    flex: 1;
+    padding: 4px;
+    background: var(--bg-highlight);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.file-actions button:hover {
+    background: var(--bg-light);
+}
+
+.file-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Right panel */
+.right-panel {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Info display */
+.info-display {
+    background: var(--bg-light);
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+}
+
+.info-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 2px;
+}
+
+.interface-select {
+    width: 100%;
+    padding: 2px;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.speed-display {
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+.speed-slider {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.speed-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--text-dim);
+}
+
+/* Control panel */
+.control-panel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+}
+
+.control-panel button {
+    padding: 8px 16px;
+    background: var(--accent);
+    border: 1px solid var(--border);
+    color: #fff;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.control-panel button:hover {
+    background: var(--accent-hover);
+}
+
+.control-panel button:disabled {
+    background: var(--bg-highlight);
+    cursor: not-allowed;
+}
+
+.status-text {
+    flex: 1;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+/* Replay info */
+.replay-info {
+    font-size: 11px;
+    color: var(--text-main);
+}
