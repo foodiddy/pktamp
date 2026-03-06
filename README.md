@@ -30,15 +30,6 @@ Run the installation script:
 ./install.sh
 ```
 
-The script will:
-1. Detect your Linux distribution
-2. Install required packages
-3. Create the `pktamp` user
-4. Set up file permissions
-5. Configure capabilities for tcpreplay
-6. Set up the firewall (ufw or firewalld)
-7. Install and enable the systemd service
-
 The installer will ask for the IP address to bind to (default: 127.0.0.1).
 
 ## Usage
@@ -60,8 +51,6 @@ Access the web interface at `http://<bind_ip>:8080`
 5. Click "STOP" to stop replay
 
 ## API
-
-### Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
@@ -95,3 +84,7 @@ Access the web interface at `http://<bind_ip>:8080`
 ## License
 
 CC0 1.0 Universal (Public Domain Dedication)
+
+## Author
+
+Original author: Scott Hall (foodiddy)
