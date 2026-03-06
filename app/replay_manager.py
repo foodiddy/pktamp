@@ -53,7 +53,9 @@ class ReplayManager:
     def get_replay_status(self, replay_id):
         if replay_id not in self.active_replays:
             return None
-        return self.active_replays[replay_id]
+        info = self.active_replays[replay_id].copy()
+        info.pop("process", None)
+        return info
 
     def list_active_replays(self):
         return {rid: info for rid, info in self.active_replays.items()}
