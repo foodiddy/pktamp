@@ -5,8 +5,8 @@ echo "=== Pktamp Installer ==="
 echo ""
 
 # Get bind IP
-read -p "Enter the IP address the web UI should bind to [127.0.0.1]: " BIND_IP
-BIND_IP=${BIND_IP:-127.0.0.1}
+read -p "Enter the IP address the web UI should bind to [0.0.0.0]: " BIND_IP
+BIND_IP=${BIND_IP:-0.0.0.0}
 PORT=8080
 
 echo ""
@@ -101,7 +101,11 @@ sudo systemctl enable --now pktamp.service
 
 echo ""
 echo "=== Installation complete ==="
-echo "Access Pktamp at: http://$BIND_IP:$PORT"
+if [ "$BIND_IP" = "0.0.0.0" ]; then
+    echo "Access Pktamp at: http://localhost:$PORT or http://<host_ip>:$PORT"
+else
+    echo "Access Pktamp at: http://$BIND_IP:$PORT"
+fi
 echo ""
 echo "Service status: systemctl status pktamp"
 echo "Logs: journalctl -u pktamp -f"
