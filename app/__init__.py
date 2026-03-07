@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from .api import api_bp
 from .config import logger
 
@@ -8,7 +8,7 @@ def create_app():
     
     @app.route("/")
     def index():
-        return app.send_static_file("index.html")
+        return render_template("index.html")
     
     logger.info("Flask app created")
     return app
