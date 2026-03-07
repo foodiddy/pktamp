@@ -3,7 +3,7 @@ from .api import api_bp
 from .config import logger
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='templates')
     app.register_blueprint(api_bp, url_prefix="/api")
     
     @app.route("/")

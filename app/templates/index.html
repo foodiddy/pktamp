@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pktamp - Packet Capture Replayer</title>
+    <link rel="stylesheet" href="/static/css/winamp.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="main-window">
+            <div class="header-bar">
+                <div class="title">Pktamp</div>
+                <div class="title-bar-controls">
+                    <button class="minimize"></button>
+                    <button class="maximize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="left-panel">
+                    <div class="playlist-header">
+                        <span class="playlist-title"> Packet Capture List</span>
+                    </div>
+                    <div class="playlist-container">
+                        <ul class="playlist">
+                            <li v-for="pcap in pcaps" 
+                                :key="pcap.name"
+                                :class="{ selected: selected.includes(pcap.name) }"
+                                @click="toggleSelect(pcap.name)">
+                                <marquee class="file-name" scrollamount="3" scrolldelay="100">
+                                    {{ pcap.name }}
+                                </marquee>
+                                <span class="file-size">{{ formatSize(pcap.size) }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="file-actions">
+                        <input type="file" id="file-upload" 
+                               @change="handleFileUpload" 
+                               style="display: none;">
+                        <button @click="$refs.fileInput.click()">Upload</button>
+                        <button @click="deleteSelected" :disabled="selected.length === 0">Delete</button>
+                    </div>
+                    
+                    <div class="upload-drag-area">
+                        <button @click="$refs.fileInput.click()">Click or Drag to Upload</button>
+                        <input type="file" ref="fileInput" 
+                               style="display: none;" 
+                               multiple
+                               accept=".pcap,.pcapng"
+                               @change="handleFileUpload">
+                    </div>
+                </div>
+                
+                <div class="right-panel">
+                    <div class="info-display">
+                        <div class="info-label">Current Interface:</div>
+                        <select v-model="chosenInterface" class="interface-select">
+                            <option v-for="iface in interfaces" 
+                                    :key="iface.name"
+                                    :value="iface.name">
+                                {{ iface.display }}
+                            </option>
+                        </select>
+                        
+                        <div class="info-label">Replay Speed:</div>
+                        <div class="speed-display">{{ displaySpeed }}</div>
+                        
+                        <input type="range" 
+                               v-model="speedMbps" 
+                               min="0" 
+                               max="20000" 
+                               step="500"
+                               class="speed-slider">
+                        
+                        <div class="speed-labels">
+                            <span>0</span>
+                            <span>1Gbps</span>
+                            <span>5Gbps</span>
+                            <span>10Gbps</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-panel">
+                        <button @click="startReplay" :disabled="selected.length === 0 || isReplaying">
+                            ▶ START
+                        </button>
+                        <button @click="stopReplay" :disabled="!isReplaying">
+                            ■ STOP
+                        </button>
+                        <div class="status-text">
+                            {{ replayStatus }}
+                        </div>
+                    </div>
+                    
+                    <div class="replay-info">
+                        <div v-if="currentReplay">
+                            <strong>Replaying:</strong> {{ currentReplay.interface }}
+                            <br>
+                            <strong>Speed:</strong> {{ currentReplay.speed_mbps }} Mbps
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
