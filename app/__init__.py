@@ -1,10 +1,13 @@
+import os
 from flask import Flask, render_template
-from jinja2 import Environment
 from .api import api_bp
 from .config import logger
 
 def create_app():
-    app = Flask(__name__, template_folder='templates')
+    app_dir = '/opt/pktamp'
+    static_folder = os.path.join(app_dir, 'static')
+    
+    app = Flask(__name__, static_folder=static_folder, static_url_path='/static')
     
     # Configure Jinja2 to use Vue.js-style delimiters
     app.jinja_env.variable_start_string = '{{{'
